@@ -1,4 +1,4 @@
-package cn.myth.mybati.binding;
+package cn.myth.mybatis.binding;
 
 import java.lang.reflect.Proxy;
 import java.util.Map;
