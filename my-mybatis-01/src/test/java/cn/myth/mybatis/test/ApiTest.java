@@ -1,6 +1,6 @@
 package cn.myth.mybatis.test;
 
-import cn.myth.mybati.binding.MapperProxyFactory;
+import cn.myth.mybatis.binding.MapperProxyFactory;
 import cn.myth.mybatis.test.dao.IUserDao;
 import org.junit.Test;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package cn.myth.mybati.binding;
+package cn.myth.mybatis.binding;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
