@@ -1,6 +1,5 @@
 package cn.myth.mybatis.session.defaults;
 
-import cn.myth.mybatis.binding.MapperRegistry;
 import cn.myth.mybatis.mapping.MappedStatement;
 import cn.myth.mybatis.session.Configuration;
 import cn.myth.mybatis.session.SqlSession;

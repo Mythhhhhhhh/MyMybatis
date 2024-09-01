@@ -78,10 +78,10 @@ public class XMLConfigBuilder extends BaseBuilder {
                 Pattern pattern = Pattern.compile("(#\\{(.*?)})");
                 Matcher matcher = pattern.matcher(sql);
                 for (int i = 1; matcher.find(); i++) {
-                    String g1 = matcher.group(1);
-                    String g2 = matcher.group(2);
-                    parameter.put(i, g2);
-                    sql = sql.replace(g1, "?");
+                    String g1 = matcher.group(1);// 提取整个占位符 #{var}
+                    String g2 = matcher.group(2); // 提取占位符中的内容 var
+                    parameter.put(i, g2); // 将提取到的内容 g2 和其索引 i 存入parameter映射中
+                    sql = sql.replace(g1, "?");// 将占位符 #{var} 替换为 ?
                 }
 
                 String msId = namespace + "." + id;
