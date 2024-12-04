@@ -3,7 +3,7 @@ package cn.myth.mybatis.mapping;
 import java.util.Map;
 
 /**
- * 绑定的SQL，是从SqlSource而来，将动态内容都处理完之后得到的SQL语句字符串，其中宝库?，还有绑定的参数
+ * 绑定的SQL，是从SqlSource而来，将动态内容都处理完之后得到的SQL语句字符串，其中包括?，还有绑定的参数
  */
 public class BoundSql {
 
