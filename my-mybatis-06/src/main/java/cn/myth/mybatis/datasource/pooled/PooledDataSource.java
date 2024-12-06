@@ -17,6 +17,7 @@ public class PooledDataSource implements DataSource {
     // 池状态
     private final PoolState state = new PoolState(this);
 
+    // 因为我们要获取驱动连接，无池化有这个功能，所以连接的时候用到了UnpooledDataSource
     private final UnpooledDataSource dataSource;
 
     // 活跃连接数
@@ -44,6 +45,10 @@ public class PooledDataSource implements DataSource {
      * pushConnection回收链接
      * 核心在于判断链接是否有效，以及进行相关的空闲链接校验，判断是否把链接回收到空闲列表中，并通知其他线程来抢占
      * 如果现在的空闲链接充足，那么这个回收的链接则会进行回滚和关闭的处理中。connection.getRealConnection().close();
+     *
+     * 1.首先将连接从活跃连接集合中移除
+     * 2.如果空闲集合未满，此时复用原连接的字段信息创建新的连接，并将其放入空闲集合中即可
+     * 3.若空闲集合已满，此时无需回收连接，直接关闭即可
      */
     protected void pushConnection(PooledConnection connection) throws SQLException {
         synchronized (state) {
@@ -93,6 +98,12 @@ public class PooledDataSource implements DataSource {
      * 获取链接的过程会使用synchronized进行加锁，因为所有线程在资源竞争的情况下，都需要进行加锁处理
      * 在加锁的代码块中通过判断是否还有空闲链接进行返回，如果没有则会判断活跃链接数是否充足，不充足则进行创建后返回。
      * 在这里也会遇到活跃链接已经进行循环等待的过程，最后再不能获取则抛出异常。
+     *
+     * 1.PooledDataSource 获取连接时，如果空闲列表里有连接，可直接取用
+     * 2.没有空闲连接，活跃连接没满时会创建新连接
+     * 3.没有空闲连接，活跃连接满时如果连接时间超时，则将此连接从活跃列表删除，创建PooledConnection并复用老的realConnection
+     * 4.没有空闲连接，活跃连接满时没有连接超时时，则等待指定时间让其连接完成任务，拿到连接就退出循环
+     * 5.最终运行完毕没有拿到连接记录badConnection的记录，循环一直没有拿到连接抛出异常
      */
     private PooledConnection popConnection(String username, String password) throws SQLException {
         boolean countedWait = false;
