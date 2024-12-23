@@ -2,6 +2,7 @@ package cn.myth.mybatis.parsing;
 
 /**
  *  普通记号解析器，处理#{}和${}参数
+ *  GenericTokenParser的作用是完成对字符串中${}和#{}的内容定位，每次定位完成后，调用TokenHandler进行内容替换
  */
 public class GenericTokenParser {
 
@@ -17,6 +18,7 @@ public class GenericTokenParser {
         this.handler = handler;
     }
 
+    // 解析#{}为具体的?
     public String parse(String text) {
         StringBuilder builder = new StringBuilder();
         if (text != null && text.length() > 0) {

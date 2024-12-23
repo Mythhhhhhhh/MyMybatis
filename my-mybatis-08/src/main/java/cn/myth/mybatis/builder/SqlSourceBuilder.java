@@ -13,6 +13,9 @@ import java.util.Map;
 
 /**
  * SQL 源码构建器
+ * 此类主要完成以下两个操作
+ * 1.一方面是解析Sql中的#{}占位符定义的属性，如jdbcType、javaType（使用较少）eg:#{id, jdbcType=INTEGER}
+ * 2.一方面是把#{}占位符替换为?占位符
  */
 public class SqlSourceBuilder extends BaseBuilder {
 
@@ -23,8 +26,11 @@ public class SqlSourceBuilder extends BaseBuilder {
     }
 
     public SqlSource parse(String originalSql, Class<?> parameterType, Map<String, Object> additionalParameters) {
+        // 将Sql中的#{}替换?，并把#{}内容转变为ParameterMapping对象
         ParameterMappingTokenHandler handler = new ParameterMappingTokenHandler(configuration, parameterType, additionalParameters);
+        // 定位标签#{}并与ParameterMappingTokenHandler合作替换?
         GenericTokenParser parser = new GenericTokenParser("#{", "}", handler);
+        // 得到处理后可执行的Sql
         String sql = parser.parse(originalSql);
         // 返回静态 SQL
         return new StaticSqlSource(configuration, sql, handler.getParameterMappings());

@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 静态SQL源码
+ * 主要创建BoundSql，供其他SqlSource实现类使用，一个中间状态
  */
 public class StaticSqlSource implements SqlSource {
     private String sql;
