@@ -29,7 +29,7 @@ public class MapperAnnotationBuilder {
     private Class<?> type;
 
     public MapperAnnotationBuilder(Configuration configuration, Class<?> type) {
-        String resource = type.getName().replace(".", "/") + ".java (best guess)";
+        String resource = type.getName().replace(".", "/") + ".java (best guess)";// cn/myth/mybatis/test/dao/IUserDao.java (best guess)
         this.assistant = new MapperBuilderAssistant(configuration, resource);
         this.configuration = configuration;
         this.type = type;
@@ -41,9 +41,9 @@ public class MapperAnnotationBuilder {
     }
 
     public void parse() {
-        String resource = type.toString();
+        String resource = type.toString();// interface cn.myth.mybatis.test.dao.IUserDao
         if (!configuration.isResourceLoaded(resource)) {
-            assistant.setCurrentNamespace(type.getName());
+            assistant.setCurrentNamespace(type.getName());// cn.myth.mybatis.test.dao.IUserDao
 
             Method[] methods = type.getMethods();
             for (Method method : methods) {

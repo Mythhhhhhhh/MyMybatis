@@ -41,9 +41,9 @@ public class MapperAnnotationBuilder {
     }
 
     public void parse() {
-        String resource = type.toString();
+        String resource = type.toString();// interface cn.myth.mybatis.test.dao.IUserDao
         if (!configuration.isResourceLoaded(resource)) {
-            assistant.setCurrentNamespace(type.getName());
+            assistant.setCurrentNamespace(type.getName());// cn.myth.mybatis.test.dao.IUserDao
 
             Method[] methods = type.getMethods();
             for (Method method : methods) {
