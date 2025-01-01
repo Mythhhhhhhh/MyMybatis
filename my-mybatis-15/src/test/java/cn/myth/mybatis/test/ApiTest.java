@@ -34,6 +34,20 @@ public class ApiTest {
         logger.info("测试结果：{}", JSON.toJSONString(res));
     }
 
+    @Test
+    public void test_queryActivityById2() throws IOException {
+        // 1. 从SqlSessionFactory中获取SqlSession
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader("mybatis-config-datasource.xml"));
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // 2. 获取映射器对象
+        IActivityDao dao = sqlSession.getMapper(IActivityDao.class);
+        // 3. 测试验证
+        Activity req = new Activity();
+        req.setActivityId(100001L);
+        Activity res = dao.queryActivityById2(req);
+        logger.info("测试结果：{}", JSON.toJSONString(res));
+    }
+
 
     @Test
     public void test_ognl() throws OgnlException {

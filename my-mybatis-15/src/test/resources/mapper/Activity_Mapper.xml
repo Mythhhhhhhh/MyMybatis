@@ -21,4 +21,20 @@
         </trim>
     </select>
 
+    <select id="queryActivityById2" parameterType="cn.myth.mybatis.test.po.Activity" resultType="cn.myth.mybatis.test.po.Activity">
+        SELECT
+            activity_id as activityId,
+            activity_name as activityName,
+            activity_desc as activityDesc,
+            create_time as createTime,
+            update_time as updateTime
+        FROM activity
+        <trim prefix="where" prefixOverrides="AND | OR" suffixOverrides="and">
+            <if test="null != activityId">
+                activity_id = #{activityId}
+            </if>
+        </trim>
+    </select>
+
+
 </mapper>
