@@ -5,11 +5,17 @@
 <configuration>
 
     <plugins>
+
+        <plugin interceptor="cn.myth.mybatis.test.plugin.TestPlugin2" />
+
         <plugin interceptor="cn.myth.mybatis.test.plugin.TestPlugin">
             <property name="test00" value="100"/>
             <property name="test01" value="200"/>
             <property name="test-Myth" value="Myth"/>
         </plugin>
+
+<!--        <plugin interceptor="cn.myth.mybatis.test.plugin.TestPlugin2" />-->
+
     </plugins>
 
     <environments default="development">
